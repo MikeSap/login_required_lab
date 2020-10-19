@@ -5,11 +5,17 @@ class ApplicationController < ActionController::Base
 
 
   def hello
-    redirect_to controller: 'sessions', action: 'new' unless session[:name]
+    redirect_to '/login' if !session[:name] || session[:name].empty?
   end
 
   def current_user
     session[:name]
+  end
+
+  private
+
+  def require_login
+    redirect_to '/login' unless current_user
   end
 
 end
